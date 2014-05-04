@@ -1,2 +1,3 @@
 # some files ignored by git
 ./data/*.txt
+./.gitignore
