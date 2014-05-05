@@ -2,6 +2,8 @@
 #include <string>
 #include "../include/Threadpool.h"
 
+#include <iostream> //测试用
+
 Workthread::Workthread() {
 
 }
@@ -30,10 +32,13 @@ void Workthread::register_threadpool(Threadpool *pThreadpool) {
 }
 
 void Workthread::compute_task(std::string &solve) {
+	//event
 	//compute start
 	
-
-
+	/*以下测试用*/
+	std::cout << pthread_self() << std::endl;	
+	std::cout << solve << std::endl;	
+	solve += std::string("added-by-server");
 
 	//compute end
 }
