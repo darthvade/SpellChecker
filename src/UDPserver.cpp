@@ -1,4 +1,7 @@
 #include "UDPserver.h"
+#include <iostream>
+#include <errno.h>
+
 
 UDPserver::UDPserver(cst &ip, cst &port) {
 	_fd_server = socket(AF_INET, SOCK_DGRAM, 0);
@@ -6,7 +9,15 @@ UDPserver::UDPserver(cst &ip, cst &port) {
 	_server_addr.sin_family = AF_INET;
 	_server_addr.sin_addr.s_addr = inet_addr(ip.c_str());
 	_server_addr.sin_port = htons(atoi(port.c_str()));
-	bind(_fd_server, (struct sockaddr *)&_server_addr, sizeof(_server_addr));
+	int reuse = 1; //为非零，即重用bind中的地址
+	if(setsockopt(_fd_server, SOL_SOCKET,SO_REUSEADDR, &reuse, sizeof(int)) < 0) {
+		std::cout << "setsocket ERROR!" << std::endl;
+	}
+	int i = bind(_fd_server, (struct sockaddr *)&_server_addr, sizeof(_server_addr));
+	/*以下测试用*/
+	if(i == -1) {
+		std::cout << errno << std::endl;
+	}
 }
 
 UDPserver::~UDPserver() {

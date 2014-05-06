@@ -12,6 +12,8 @@
 #include "Condition.h"
 #include "Noncopyable.h"
 #include "Workthread.h"
+#include "Config.h"
+#include <cstdlib>
 #include <string>
 
 struct Task {
@@ -23,7 +25,7 @@ struct Task {
 class Threadpool : public Noncopyable {
 friend class Workthread;
 public:
-	Threadpool(std::vector<Workthread>::size_type);
+	Threadpool(Config &);
 	~Threadpool();
 	void start_threadpool(); //启动线程池
 	void stop_threadpool(); //关闭线程池
@@ -35,6 +37,7 @@ private:
 	bool add_task_doneq(Task task); //向任务完成队列中添加任务
 	bool get_task_doneq(Task &task); //从任务完成队列中取得任务
 
+	Config _cfig; //程序配置信息
 	std::queue<Task> _task_doneq; //任务等待队列
 	std::queue<Task> _task_undoneq; //任务完成队列
 	std::vector<Workthread>::size_type _max_thread; //最大线程数

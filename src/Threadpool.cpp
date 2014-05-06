@@ -1,10 +1,11 @@
 #include "../include/Threadpool.h"
 
-Threadpool::Threadpool(std::vector<Workthread>::size_type max_thread) : 
+Threadpool::Threadpool(Config &cfig) : 
+_cfig(cfig),
 _task_doneq(),
 _task_undoneq(),
-_max_thread(max_thread),
-_thread_vector(_max_thread),
+_max_thread(atoi(_cfig[2].c_str())),
+_thread_vector(atoi(_cfig[2].c_str())),
 _is_start(false),
 _done_lock(),
 _undone_lock(),

@@ -11,8 +11,8 @@ Config::~Config() {
 void Config::_readConfigFile(std::string &filename) {
 	std::fstream fs(filename.c_str());	
 	std::string temp;
-	while(fs >> temp) {
-		if(temp[0] != '#') { 
+	while(std::getline(fs, temp)) {
+		if(temp[0] != '#' && temp.size() != 0) { 
 			_config_vec.push_back(temp);		
 		}
 	}
