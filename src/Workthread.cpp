@@ -3,6 +3,7 @@
 #include "../include/Threadpool.h"
 
 #include <iostream> //测试用
+#include <cstdlib>
 
 Workthread::Workthread() {
 
@@ -34,11 +35,14 @@ void Workthread::register_threadpool(Threadpool *pThreadpool) {
 void Workthread::compute_task(std::string &solve) {
 	//event
 	//compute start
-	
+	std::wstring target = Convert::StringToWstring(solve);	
+	std::wstring result = _pThreadpool->_checker.findTopKSimilarWords(target, atoi(_pThreadpool->_cfig[4].c_str()));
+	solve.clear();
+	solve = Convert::WstringToString(result);	
 	/*以下测试用*/
-	std::cout << pthread_self() << std::endl;	
-	std::cout << solve << std::endl;	
-	solve += std::string("added-by-server");
+	//std::cout << pthread_self() << std::endl;	
+	//std::cout << solve << std::endl;	
+	//solve += std::string("added-by-server");
 
 	//compute end
 }

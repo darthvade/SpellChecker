@@ -27,6 +27,8 @@ int main(int argc, char *argv[]) {
 	//Threadpool thpool(8);
 	thpool.start_threadpool();
 
+	cout << "Server Started!" << endl;
+
 	string temp;
 
 	while(true) {

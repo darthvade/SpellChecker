@@ -15,6 +15,8 @@
 #include "Config.h"
 #include <cstdlib>
 #include <string>
+#include "WstringConvertString.hpp"
+#include "Checker.h"
 
 struct Task {
 	unsigned int ip; //任务提交方ip
@@ -42,6 +44,9 @@ private:
 	std::queue<Task> _task_undoneq; //任务完成队列
 	std::vector<Workthread>::size_type _max_thread; //最大线程数
 	std::vector<Workthread> _thread_vector; //线程队列
+	
+	Checker _checker; //字符匹配对象
+
 	bool _is_start; //线程池是否启动
 	mutable Mutexlock _done_lock; //任务等待队列锁
 	mutable Mutexlock _undone_lock; //任务完成队列锁
