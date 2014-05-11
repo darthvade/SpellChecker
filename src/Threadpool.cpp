@@ -6,6 +6,8 @@ _task_doneq(),
 _task_undoneq(),
 _max_thread(atoi(_cfig[2].c_str())),
 _thread_vector(atoi(_cfig[2].c_str())),
+_cacheMag(_cfig[5], _cfig[6]),
+_cacheVec(atoi(_cfig[2].c_str())),
 _checker(_cfig[3]),
 _is_start(false),
 _done_lock(),
@@ -16,6 +18,11 @@ _undone_cond(&_undone_lock) {
 		iter != _thread_vector.end(); ++iter) {
 		iter->register_threadpool(this);	
 	}
+	for(std::vector<CheckerCache>::iterator iter = _cacheVec.begin();
+		iter != _cacheVec.end(); ++iter) {
+		iter->initToCacheManager(&this->_cacheMag);	
+	}
+	_syncThread.register_threadpool(this);
 }
 
 Threadpool::~Threadpool() {
@@ -29,6 +36,7 @@ void Threadpool::start_threadpool() {
 			iter != _thread_vector.end(); ++iter) {
 			iter->start();
 		}
+		_syncThread.start(); 
 	}
 }
 
@@ -43,6 +51,7 @@ void Threadpool::stop_threadpool() {
 		iter != _thread_vector.end(); ++iter) {
 		iter->join();
 	}
+	_syncThread.join();
 	while(!_task_doneq.empty() || !_task_undoneq.empty()) {
 		_task_doneq.pop();
 		_task_undoneq.pop();

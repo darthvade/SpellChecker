@@ -37,6 +37,8 @@ struct Compare {
 		} else if (a.editdis == b.editdis) {
 			if(a.frequence < b.frequence) {
 				status = true;
+			} else {
+				status = false;
 			}
 		} else {
 			status = false;

@@ -16,6 +16,7 @@
 using namespace std;
 
 int main(int argc, char *argv[]) {
+
 	if(argc != 2) {
 		return 1;
 	}
@@ -24,7 +25,6 @@ int main(int argc, char *argv[]) {
 	cout << cfig[0] << " " << cfig[1] << endl;
 	UDPserver ser(cfig[0], cfig[1]);
 	Threadpool thpool(cfig);
-	//Threadpool thpool(8);
 	thpool.start_threadpool();
 
 	cout << "Server Started!" << endl;
@@ -37,10 +37,6 @@ int main(int argc, char *argv[]) {
 		task.solve = temp;
 		task.ip = ser.getClientIp();
 		task.port = ser.getClientPort();
-
-
-		//std::cout << "开始测试" << std::endl;
-		//std::cout << temp << std::endl;
 		
 		thpool.add_task(task);
 		thpool.get_task(task);

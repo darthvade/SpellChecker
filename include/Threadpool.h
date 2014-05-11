@@ -17,6 +17,9 @@
 #include <string>
 #include "WstringConvertString.hpp"
 #include "Checker.h"
+#include "CacheManager.h"
+#include "SyncCacheThread.h"
+#include "CheckerCache.h"
 
 struct Task {
 	unsigned int ip; //任务提交方ip
@@ -26,6 +29,7 @@ struct Task {
 
 class Threadpool : public Noncopyable {
 friend class Workthread;
+friend class SyncCacheThread;
 public:
 	Threadpool(Config &);
 	~Threadpool();
@@ -44,6 +48,9 @@ private:
 	std::queue<Task> _task_undoneq; //任务完成队列
 	std::vector<Workthread>::size_type _max_thread; //最大线程数
 	std::vector<Workthread> _thread_vector; //线程队列
+	CacheManager _cacheMag;	//磁盘Cache
+	std::vector<CheckerCache> _cacheVec; //内存Cache数组
+	SyncCacheThread _syncThread; //磁盘Cache同步线程
 	
 	Checker _checker; //字符匹配对象
 
