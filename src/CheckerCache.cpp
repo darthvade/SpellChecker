@@ -1,5 +1,5 @@
-#include "CheckerCache.h"
-#include "CacheManager.h"
+#include "../include/CheckerCache.h"
+#include "../include/CacheManager.h"
 
 /*
 CheckerCache::CheckerCache(CacheManager *pDiskCache) :
